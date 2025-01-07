@@ -24,7 +24,7 @@ export class Diary {
 
   @ManyToOne(() => Emotion, (emotion) => emotion.diaries, {
     eager: true,
-    nullable: true,
+    nullable: false,
   })
   @CreateDateColumn()
   createdAt: Date;

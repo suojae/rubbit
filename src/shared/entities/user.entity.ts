@@ -31,7 +31,7 @@ export class User {
     eager: true,
     nullable: true,
   })
-  character: Character;
+  character: Character | null;
 
   @OneToMany(() => Diary, (diary) => diary.user)
   diaries: Diary[];

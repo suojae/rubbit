@@ -3,14 +3,11 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToOne,
-  OneToOne,
   CreateDateColumn,
   UpdateDateColumn,
-  JoinColumn,
 } from 'typeorm';
 import { User } from './user.entity';
 import { Emotion } from './emotion.entity';
-import { DiaryAdvice } from './diary-advice.entity';
 
 @Entity('diaries')
 export class Diary {
@@ -29,12 +26,6 @@ export class Diary {
     eager: true,
     nullable: true,
   })
-  emotion: Emotion;
-
-  @OneToOne(() => DiaryAdvice, (advice) => advice.diary, { cascade: true })
-  @JoinColumn()
-  diaryAdvice: DiaryAdvice;
-
   @CreateDateColumn()
   createdAt: Date;
 

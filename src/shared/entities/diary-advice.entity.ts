@@ -14,7 +14,7 @@ export class DiaryAdvice {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToOne(() => Diary, (diary) => diary.diaryAdvice)
+  @OneToOne(() => Diary, { onDelete: 'CASCADE' })
   @JoinColumn()
   diary: Diary;
 

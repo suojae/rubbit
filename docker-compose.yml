@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql  # ✅ 컨테이너 이름을 "mysql"로 설정하여 NestJS가 찾을 수 있도록 함
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root  # ✅ root 계정 비밀번호만 설정
+      MYSQL_DATABASE: my_database
+      MYSQL_USER: myuser  # ✅ 일반 사용자 계정 추가
+      MYSQL_PASSWORD: password  # ✅ 일반 사용자 계정 비밀번호 추가
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  nestjs-app:
+    build: .
+    container_name: nestjs-app
+    restart: always
+    depends_on:
+      - mysql  # ✅ MySQL이 시작된 후에 NestJS 컨테이너 실행
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env  # ✅ .env 파일 사용
+    environment:
+      NODE_ENV: ${NODE_ENV}
+      PORT: ${PORT}
+      DB_HOST: mysql  # ✅ 도커 네트워크에서 "mysql"로 연결
+      DB_PORT: ${DB_PORT}
+      DB_USER: myuser  # ✅ 일반 사용자 계정 사용
+      DB_PASSWORD: password  # ✅ 일반 사용자 비밀번호 사용
+      DB_NAME: ${DB_NAME}
+      AWS_REGION: ${AWS_REGION}
+      COGNITO_CLIENT_ID: ${COGNITO_CLIENT_ID}
+      COGNITO_USER_POOL_ID: ${COGNITO_USER_POOL_ID}
+      COGNITO_CLIENT_SECRET: ${COGNITO_CLIENT_SECRET}
+      KAKAO_CLIENT_ID: ${KAKAO_CLIENT_ID}
+      KAKAO_REDIRECT_URI: ${KAKAO_REDIRECT_URI}
+      APPLE_CLIENT_ID: ${APPLE_CLIENT_ID}
+      APPLE_TEAM_ID: ${APPLE_TEAM_ID}
+      APPLE_KEY_ID: ${APPLE_KEY_ID}
+      APPLE_PRIVATE_KEY_PATH: ${APPLE_PRIVATE_KEY_PATH}
+      APPLE_REDIRECT_URI: ${APPLE_REDIRECT_URI}
+
+volumes:
+  mysql_data:

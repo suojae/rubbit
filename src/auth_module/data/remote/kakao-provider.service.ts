@@ -1,10 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { AxiosResponse } from 'axios';
-import { SocialLoginProvider } from './social-login-provider.interface';
 import { HttpService } from '@nestjs/axios';
 
 @Injectable()
-export class KakaoProviderService implements SocialLoginProvider {
+export class KakaoProviderService {
   private readonly tokenEndpoint = 'https://kauth.kakao.com/oauth/token';
   private readonly userInfoEndpoint = 'https://kapi.kakao.com/v2/user/me';
 

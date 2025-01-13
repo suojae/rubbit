@@ -1,11 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { AxiosResponse } from 'axios';
-import { SocialLoginProvider } from './social-login-provider.interface';
 import { HttpService } from '@nestjs/axios';
 import * as jwt from 'jsonwebtoken';
 
 @Injectable()
-export class AppleProviderService implements SocialLoginProvider {
+export class AppleProviderService {
   private readonly tokenEndpoint = 'https://appleid.apple.com/auth/token';
 
   private idToken: string | null = null;
@@ -13,11 +12,11 @@ export class AppleProviderService implements SocialLoginProvider {
   constructor(private readonly httpService: HttpService) {}
 
   public async getAccessToken(authCode: string): Promise<string> {
-    const clientId = process.env.APPLE_CLIENT_ID || 'YOUR_APPLE_CLIENT_ID';
+    const clientId = process.env.APPLE_CLIENT_ID || 'DEFAULT_APPLE_CLIENT_ID';
     const clientSecret =
-      process.env.APPLE_CLIENT_SECRET || 'YOUR_APPLE_CLIENT_SECRET';
+      process.env.APPLE_CLIENT_SECRET || 'DEFAULT_APPLE_CLIENT_SECRET';
     const redirectUri =
-      process.env.APPLE_REDIRECT_URI || 'YOUR_APPLE_REDIRECT_URI';
+      process.env.APPLE_REDIRECT_URI || 'DEFAULT_APPLE_REDIRECT_URI';
 
     const params = new URLSearchParams({
       grant_type: 'authorization_code',

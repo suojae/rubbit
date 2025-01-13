@@ -26,6 +26,8 @@ export class Diary {
     eager: true,
     nullable: false,
   })
+  emotion: Emotion;
+
   @CreateDateColumn()
   createdAt: Date;
 

@@ -8,7 +8,8 @@ class UserEndpoint extends Endpoint {
       throw NotFoundException('User with id $id not found');
     }
 
-    var character = await session.services.characterService.getCharacterById(user.characterId);
+    var character = await session.services.characterService
+        .getCharacterById(user.characterId);
 
     return UserResponse(
       id: user.id!,
@@ -23,7 +24,8 @@ class UserEndpoint extends Endpoint {
   }
 
   Future<UserResponse> socialLogin(Session session, UserRequest request) async {
-    var user = await session.services.userService.getUserBySocialId(request.socialId);
+    var user =
+        await session.services.userService.getUserBySocialId(request.socialId);
 
     if (user == null) {
       user = await session.services.userService.createUser(
@@ -34,7 +36,8 @@ class UserEndpoint extends Endpoint {
       );
     }
 
-    var character = await session.services.characterService.getCharacterById(user.characterId);
+    var character = await session.services.characterService
+        .getCharacterById(user.characterId);
 
     return UserResponse(
       id: user.id!,
@@ -48,13 +51,15 @@ class UserEndpoint extends Endpoint {
     );
   }
 
-  Future<UserResponse> updateUserInfo(Session session, UpdateUserParams params) async {
+  Future<UserResponse> updateUserInfo(
+      Session session, UpdateUserParams params) async {
     var user = await session.services.userService.getUserById(params.id);
     if (user == null) {
       throw NotFoundException('User with id ${params.id} not found');
     }
 
-    var character = await session.services.characterService.getCharacterById(params.request.characterId);
+    var character = await session.services.characterService
+        .getCharacterById(params.request.characterId);
     if (character == null) {
       throw ValidationException('Character not found');
     }

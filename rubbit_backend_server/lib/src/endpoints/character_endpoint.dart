@@ -5,14 +5,17 @@ class CharacterEndpoint extends Endpoint {
   Future<List<CharacterResponse>> listAllCharacters(Session session) async {
     var characters = await session.services.characterService.getAllCharacters();
 
-    return characters.map((character) => CharacterResponse(
-      id: character.id!,
-      name: character.name,
-    )).toList();
+    return characters
+        .map((character) => CharacterResponse(
+              id: character.id!,
+              name: character.name,
+            ))
+        .toList();
   }
 
   Future<CharacterResponse> getCharacterById(Session session, int id) async {
-    var character = await session.services.characterService.getCharacterById(id);
+    var character =
+        await session.services.characterService.getCharacterById(id);
     if (character == null) {
       throw NotFoundException('Character with id $id not found');
     }
@@ -23,8 +26,10 @@ class CharacterEndpoint extends Endpoint {
     );
   }
 
-  Future<CharacterResponse> createNewCharacter(Session session, CharacterRequest request) async {
-    var character = await session.services.characterService.createCharacter(request.name);
+  Future<CharacterResponse> createNewCharacter(
+      Session session, CharacterRequest request) async {
+    var character =
+        await session.services.characterService.createCharacter(request.name);
 
     return CharacterResponse(
       id: character.id!,
@@ -32,15 +37,18 @@ class CharacterEndpoint extends Endpoint {
     );
   }
 
-  Future<CharacterResponse> updateCharacterInfo(Session session, UpdateCharacterParams params) async {
-    var character = await session.services.characterService.getCharacterById(params.id);
+  Future<CharacterResponse> updateCharacterInfo(
+      Session session, UpdateCharacterParams params) async {
+    var character =
+        await session.services.characterService.getCharacterById(params.id);
     if (character == null) {
       throw NotFoundException('Character with id ${params.id} not found');
     }
 
     character.name = params.request.name;
 
-    var updatedCharacter = await session.services.characterService.updateCharacter(character);
+    var updatedCharacter =
+        await session.services.characterService.updateCharacter(character);
     if (updatedCharacter == null) {
       throw InternalServerError('Failed to update character');
     }

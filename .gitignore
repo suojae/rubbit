@@ -1,0 +1,50 @@
+# Dart/Pub
+.dart_tool/
+.packages
+.pub-cache/
+build/
+*.lock
+*.swp
+
+# Serverpod Generated Code
+lib/src/generated/
+protocol.yaml
+migrations/
+
+# IDEs
+.vscode/
+.idea/
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Docker
+docker-compose.override.yml
+.env
+*.pid
+
+# Test output
+coverage/
+test/tmp/
+
+# Terraform (optional, if used)
+.terraform/
+*.tfstate
+*.tfstate.backup
+terraform.tfvars
+
+# ECR / build artifacts
+bin/server
+runtime/
+
+# Ignore secrets
+config/*.secrets.yaml
+config/*secrets*.json
+
+# Ignore Flutter/.metadata if frontend included later
+.flutter-plugins
+.metadata

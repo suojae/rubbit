@@ -4,14 +4,11 @@ import 'package:serverpod/serverpod.dart';
 class DiaryEndpoint extends Endpoint {
   // 사용자의 모든 일기 조회
   Future<List<DiaryResponse>> listUserDiaries(
-      Session session,
-      UserDiariesParams params
-      ) async {
+      Session session, UserDiariesParams params) async {
     var diaries = await session.services.diaryService.getDiariesByUserId(
         params.userId,
         limit: params.limit,
-        offset: params.offset
-    );
+        offset: params.offset);
 
     return await _mapDiariesToResponses(session, diaries);
   }
@@ -28,21 +25,17 @@ class DiaryEndpoint extends Endpoint {
 
   // 특정 감정의 일기 조회
   Future<List<DiaryResponse>> listUserDiariesByEmotion(
-      Session session,
-      EmotionDiariesParams params
-      ) async {
+      Session session, EmotionDiariesParams params) async {
     var diaries = await session.services.diaryService.getDiariesByEmotionId(
-        params.userId,
-        params.emotionId,
-        limit: params.limit,
-        offset: params.offset
-    );
+        params.userId, params.emotionId,
+        limit: params.limit, offset: params.offset);
 
     return await _mapDiariesToResponses(session, diaries);
   }
 
   // 새 일기 작성
-  Future<DiaryResponse> createNewDiary(Session session, DiaryRequest request) async {
+  Future<DiaryResponse> createNewDiary(
+      Session session, DiaryRequest request) async {
     var diary = await session.services.diaryService.createDiary(
       userId: request.userId,
       content: request.content,
@@ -56,7 +49,8 @@ class DiaryEndpoint extends Endpoint {
   }
 
   // 일기 내용 업데이트
-  Future<DiaryResponse> updateDiaryContent(Session session, UpdateDiaryParams params) async {
+  Future<DiaryResponse> updateDiaryContent(
+      Session session, UpdateDiaryParams params) async {
     var diary = await session.services.diaryService.getDiaryById(params.id);
     if (diary == null) {
       throw NotFoundException('Diary with id ${params.id} not found');
@@ -64,7 +58,8 @@ class DiaryEndpoint extends Endpoint {
 
     // 소유자 확인
     if (diary.userId != params.request.userId) {
-      throw UnauthorizedException('You are not authorized to update this diary');
+      throw UnauthorizedException(
+          'You are not authorized to update this diary');
     }
 
     diary.content = params.request.content;
@@ -77,7 +72,8 @@ class DiaryEndpoint extends Endpoint {
 
     // 감정이 바뀌었다면 조언도 새로 생성
     if (diary.emotionId != params.request.emotionId) {
-      await session.services.diaryAdviceService.generateAdvice(updatedDiary.id!);
+      await session.services.diaryAdviceService
+          .generateAdvice(updatedDiary.id!);
     }
 
     return await _mapDiaryToResponse(session, updatedDiary);
@@ -92,7 +88,8 @@ class DiaryEndpoint extends Endpoint {
 
     // 소유자 확인
     if (diary.userId != params.userId) {
-      throw UnauthorizedException('You are not authorized to delete this diary');
+      throw UnauthorizedException(
+          'You are not authorized to delete this diary');
     }
 
     return await session.services.diaryService.deleteDiary(params.id);
@@ -100,28 +97,27 @@ class DiaryEndpoint extends Endpoint {
 
   // 일기 검색
   Future<List<DiaryResponse>> searchUserDiaries(
-      Session session,
-      SearchDiariesParams params
-      ) async {
+      Session session, SearchDiariesParams params) async {
     var diaries = await session.services.diaryService.searchDiaries(
-        params.userId,
-        params.query,
-        limit: params.limit,
-        offset: params.offset
-    );
+        params.userId, params.query,
+        limit: params.limit, offset: params.offset);
 
     return await _mapDiariesToResponses(session, diaries);
   }
 
   // 사용자 일기 통계 조회
-  Future<Map<String, dynamic>> getUserDiaryStats(Session session, int userId) async {
+  Future<Map<String, dynamic>> getUserDiaryStats(
+      Session session, int userId) async {
     return await session.services.diaryService.getDiaryStatsByUserId(userId);
   }
 
   // 헬퍼 메서드 - Diary 엔티티를 DiaryResponse로 변환
-  Future<DiaryResponse> _mapDiaryToResponse(Session session, Diary diary) async {
-    var emotion = await session.services.emotionService.getEmotionById(diary.emotionId);
-    var advice = await session.services.diaryAdviceService.getAdviceByDiaryId(diary.id!);
+  Future<DiaryResponse> _mapDiaryToResponse(
+      Session session, Diary diary) async {
+    var emotion =
+        await session.services.emotionService.getEmotionById(diary.emotionId);
+    var advice =
+        await session.services.diaryAdviceService.getAdviceByDiaryId(diary.id!);
 
     DiaryAdviceResponse? adviceResponse;
     if (advice != null) {
@@ -148,7 +144,8 @@ class DiaryEndpoint extends Endpoint {
   }
 
   // 헬퍼 메서드 - Diary 리스트를 DiaryResponse 리스트로 변환
-  Future<List<DiaryResponse>> _mapDiariesToResponses(Session session, List<Diary> diaries) async {
+  Future<List<DiaryResponse>> _mapDiariesToResponses(
+      Session session, List<Diary> diaries) async {
     List<DiaryResponse> responses = [];
 
     for (var diary in diaries) {
@@ -174,7 +171,8 @@ class EmotionDiariesParams {
   final int? limit;
   final int? offset;
 
-  EmotionDiariesParams({required this.userId, required this.emotionId, this.limit, this.offset});
+  EmotionDiariesParams(
+      {required this.userId, required this.emotionId, this.limit, this.offset});
 }
 
 class UpdateDiaryParams {
@@ -197,5 +195,6 @@ class SearchDiariesParams {
   final int? limit;
   final int? offset;
 
-  SearchDiariesParams({required this.userId, required this.query, this.limit, this.offset});
+  SearchDiariesParams(
+      {required this.userId, required this.query, this.limit, this.offset});
 }

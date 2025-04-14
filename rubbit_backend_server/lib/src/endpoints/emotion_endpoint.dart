@@ -6,12 +6,14 @@ class EmotionEndpoint extends Endpoint {
   Future<List<EmotionResponse>> listAllEmotions(Session session) async {
     var emotions = await session.services.emotionService.getAllEmotions();
 
-    return emotions.map((emotion) => EmotionResponse(
-      id: emotion.id!,
-      name: emotion.name,
-      createdAt: emotion.createdAt,
-      updatedAt: emotion.updatedAt,
-    )).toList();
+    return emotions
+        .map((emotion) => EmotionResponse(
+              id: emotion.id!,
+              name: emotion.name,
+              createdAt: emotion.createdAt,
+              updatedAt: emotion.updatedAt,
+            ))
+        .toList();
   }
 
   // 특정 감정 조회
@@ -30,8 +32,10 @@ class EmotionEndpoint extends Endpoint {
   }
 
   // 새 감정 생성
-  Future<EmotionResponse> createNewEmotion(Session session, EmotionRequest request) async {
-    var emotion = await session.services.emotionService.createEmotion(request.name);
+  Future<EmotionResponse> createNewEmotion(
+      Session session, EmotionRequest request) async {
+    var emotion =
+        await session.services.emotionService.createEmotion(request.name);
 
     return EmotionResponse(
       id: emotion.id!,
@@ -42,15 +46,18 @@ class EmotionEndpoint extends Endpoint {
   }
 
   // 감정 정보 업데이트
-  Future<EmotionResponse> updateEmotionInfo(Session session, UpdateEmotionParams params) async {
-    var emotion = await session.services.emotionService.getEmotionById(params.id);
+  Future<EmotionResponse> updateEmotionInfo(
+      Session session, UpdateEmotionParams params) async {
+    var emotion =
+        await session.services.emotionService.getEmotionById(params.id);
     if (emotion == null) {
       throw NotFoundException('Emotion with id ${params.id} not found');
     }
 
     emotion.name = params.request.name;
 
-    var updatedEmotion = await session.services.emotionService.updateEmotion(emotion);
+    var updatedEmotion =
+        await session.services.emotionService.updateEmotion(emotion);
     if (updatedEmotion == null) {
       throw InternalServerError('Failed to update emotion');
     }

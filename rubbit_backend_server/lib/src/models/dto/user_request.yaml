@@ -1,0 +1,6 @@
+class: UserRequest
+fields:
+  nickname: String
+  socialId: String
+  agreedToTerms: bool
+  characterId: int

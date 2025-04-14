@@ -1,0 +1,10 @@
+class: DiaryAdviceResponse
+fields:
+  id: int
+  userId: int
+  content: String
+  emotionId: int
+  emotionName: String?
+  createdAt: DateTime
+  updatedAt: DateTime?
+  advice: DiaryAdviceResponse?

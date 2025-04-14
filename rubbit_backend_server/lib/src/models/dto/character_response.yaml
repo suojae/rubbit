@@ -1,0 +1,4 @@
+class: CharacterResponse
+fields:
+  id: int
+  name: String

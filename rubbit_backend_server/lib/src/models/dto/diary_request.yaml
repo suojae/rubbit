@@ -1,0 +1,5 @@
+class: DiaryRequest
+fields:
+  userId: int
+  content: String
+  emotionId: int

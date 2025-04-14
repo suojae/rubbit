@@ -1,0 +1,6 @@
+class: EmotionResponse
+fields:
+  id: int
+  name: String
+  createdAt: DateTime
+  updatedAt: DateTime?

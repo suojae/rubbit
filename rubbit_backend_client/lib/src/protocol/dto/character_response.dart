@@ -9,51 +9,42 @@
 // ignore_for_file: use_super_parameters
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
+import 'package:serverpod_client/serverpod_client.dart' as _i1;
 
-abstract class Example
-    implements _i1.SerializableModel, _i1.ProtocolSerialization {
-  Example._({
+abstract class CharacterResponse implements _i1.SerializableModel {
+  CharacterResponse._({
+    required this.id,
     required this.name,
-    required this.data,
   });
 
-  factory Example({
+  factory CharacterResponse({
+    required int id,
     required String name,
-    required int data,
-  }) = _ExampleImpl;
+  }) = _CharacterResponseImpl;
 
-  factory Example.fromJson(Map<String, dynamic> jsonSerialization) {
-    return Example(
+  factory CharacterResponse.fromJson(Map<String, dynamic> jsonSerialization) {
+    return CharacterResponse(
+      id: jsonSerialization['id'] as int,
       name: jsonSerialization['name'] as String,
-      data: jsonSerialization['data'] as int,
     );
   }
 
+  int id;
+
   String name;
 
-  int data;
-
-  /// Returns a shallow copy of this [Example]
+  /// Returns a shallow copy of this [CharacterResponse]
   /// with some or all fields replaced by the given arguments.
   @_i1.useResult
-  Example copyWith({
+  CharacterResponse copyWith({
+    int? id,
     String? name,
-    int? data,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'name': name,
-      'data': data,
-    };
-  }
-
-  @override
-  Map<String, dynamic> toJsonForProtocol() {
-    return {
-      'name': name,
-      'data': data,
     };
   }
 
@@ -63,26 +54,26 @@ abstract class Example
   }
 }
 
-class _ExampleImpl extends Example {
-  _ExampleImpl({
+class _CharacterResponseImpl extends CharacterResponse {
+  _CharacterResponseImpl({
+    required int id,
     required String name,
-    required int data,
   }) : super._(
+          id: id,
           name: name,
-          data: data,
         );
 
-  /// Returns a shallow copy of this [Example]
+  /// Returns a shallow copy of this [CharacterResponse]
   /// with some or all fields replaced by the given arguments.
   @_i1.useResult
   @override
-  Example copyWith({
+  CharacterResponse copyWith({
+    int? id,
     String? name,
-    int? data,
   }) {
-    return Example(
+    return CharacterResponse(
+      id: id ?? this.id,
       name: name ?? this.name,
-      data: data ?? this.data,
     );
   }
 }

@@ -1,0 +1,10 @@
+class: UserResponse
+fields:
+  id: int
+  nickname: String
+  socialId: String
+  agreedToTerms: bool
+  characterId: int
+  characterName: String?
+  createdAt: DateTime
+  updatedAt: DateTime?

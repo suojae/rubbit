@@ -1,0 +1,3 @@
+class: CharacterRequest
+fields:
+  name: String

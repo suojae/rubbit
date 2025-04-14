@@ -1,4 +1,4 @@
 type: server
 
-client_package_path: ../rubbit_server_client
+client_package_path: ../rubbit_backend_client
 server_test_tools_path: test/integration/test_tools

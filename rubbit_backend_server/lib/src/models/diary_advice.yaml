@@ -1,0 +1,20 @@
+class: DiaryAdvice
+table: diary_advice
+fields:
+  diaryId:
+    type: int
+    relation:
+      parent: diary
+      onDelete: cascade
+  encouragement: String
+  fortune: String
+  createdAt:
+    type: DateTime
+    default: now
+  updatedAt:
+    type: DateTime
+    default: now
+indexes:
+  diary_advice_diary_idx:
+    fields: diaryId
+    unique: true

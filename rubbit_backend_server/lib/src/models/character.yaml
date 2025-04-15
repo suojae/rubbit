@@ -1,0 +1,8 @@
+class: Character
+table: character
+fields:
+  name: String
+indexes:
+  character_name_idx:
+    fields: name
+    unique: true

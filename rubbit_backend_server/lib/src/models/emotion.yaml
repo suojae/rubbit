@@ -1,0 +1,14 @@
+class: Emotion
+table: emotion
+fields:
+  name: String
+  createdAt:
+    type: DateTime
+    default: now
+  updatedAt:
+    type: DateTime
+    default: now
+indexes:
+  emotion_name_idx:
+    fields: name
+    unique: true

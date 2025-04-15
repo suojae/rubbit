@@ -1,0 +1,27 @@
+class: Diary
+table: diary
+fields:
+  userId:
+    type: int
+    relation:
+      parent: user
+      onDelete: cascade
+  content: String
+  emotionId:
+    type: int
+    relation:
+      parent: emotion
+      onDelete: cascade
+  createdAt:
+    type: DateTime
+    default: now
+  updatedAt:
+    type: DateTime
+    default: now
+indexes:
+  diary_user_idx:
+    fields: userId
+  diary_emotion_idx:
+    fields: emotionId
+  diary_created_at_idx:
+    fields: createdAt

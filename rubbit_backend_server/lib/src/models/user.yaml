@@ -1,0 +1,23 @@
+class: User
+table: user
+fields:
+  nickname: String
+  socialId: String
+  agreedToTerms: bool
+  characterId:
+    type: int
+    relation:
+      parent: character
+      onDelete: cascade
+  createdAt:
+    type: DateTime
+    default: now
+  updatedAt:
+    type: DateTime
+    default: now
+indexes:
+  user_social_id_idx:
+    fields: socialId
+    unique: true
+  user_character_idx:
+    fields: characterId
